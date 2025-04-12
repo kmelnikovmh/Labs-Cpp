@@ -1,0 +1,9 @@
+load $0 ../test/data_test/matrix-2x3.txt
+load $1 ../test/data_test/matrix-3x4.txt
+print $0
+print $1
+load
+load $0 foo bar baz
+load foo test-data/matrix-2x3.txt
+load $0 ../test/data_test/matrix-incomplete.txt
+exit
