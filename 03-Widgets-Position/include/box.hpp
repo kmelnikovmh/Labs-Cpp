@@ -10,10 +10,10 @@ public:
     enum class kind { HORIZONTAL, VERTICAL };
     explicit box(box::kind);
 
-    widget *add(std::unique_ptr<widget>);
+    widget* add(std::unique_ptr<widget>);
     std::unique_ptr<widget> remove(int);
 
-    [[nodiscard]] widget *get(int) const;
+    [[nodiscard]] widget* get(int) const;
     [[nodiscard]] int size() const;
     [[nodiscard]] int width() const final;
     [[nodiscard]] int height() const final;
@@ -22,9 +22,9 @@ public:
     void update_height();
     void update_layout() final;
 
-    widget *child_at(int, int) final;
-    widget *child_atVERT(const int &, const int &);
-    widget *child_atHORI(const int &, const int &);
+    widget* child_at(int, int) final;
+    widget* child_atVERT(const int&, const int&);
+    widget* child_atHORI(const int&, const int&);
 
 private:
     box::kind m_orientation;

@@ -16,14 +16,14 @@
 #define boost_dll_import_symbol ::boost::dll::import
 #endif
 
-std::string primaryProcessingString(const std::string &str) {
+std::string primaryProcessingString(const std::string& str) {
     std::stringstream sstream(str);
     std::string out;
     sstream >> out;
     return out;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 #ifdef _MSC_VER
     _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE | _CRTDBG_MODE_DEBUG);
     _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);
@@ -41,8 +41,9 @@ int main(int argc, char *argv[]) {
     boost::shared_ptr<tictactoe::View> currentView;
     currentView = boost_dll_import_symbol<tictactoe::View>(
         // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic,-warnings-as-errors)
-        argv[1], "Views", boost::dll::load_mode::append_decorations
-    );
+        argv[1],
+        "Views",
+        boost::dll::load_mode::append_decorations);
 
     tictactoe::Game currGame = tictactoe::Game();
     std::string str;
@@ -52,16 +53,12 @@ int main(int argc, char *argv[]) {
         std::string primaryString = primaryProcessingString(str);
         if (primaryString.starts_with("view-")) {
             currentView = boost_dll_import_symbol<tictactoe::View>(
-                primaryString, "Views",
-                boost::dll::load_mode::append_decorations
-            );
+                primaryString, "Views", boost::dll::load_mode::append_decorations);
             currentView->printField(currGame, rightCircle, true);
             continue;
         }
 
-        rightCircle = currGame.oneCircle(
-            currentView->readCoord(str), currentView->existExit()
-        );
+        rightCircle = currGame.oneCircle(currentView->readCoord(str), currentView->existExit());
         if (rightCircle == tictactoe::State::exit) {
             break;
         }

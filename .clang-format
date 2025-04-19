@@ -1,27 +1,20 @@
-BasedOnStyle: Chromium
-IndentWidth: 4
-AccessModifierOffset: -4
-PointerAlignment: Right
+BasedOnStyle: Chromium                      # Базовый стиль форматирования
+IndentWidth: 4                              # Количество пробелов для отступов
+AccessModifierOffset: -4                    # Отступ для модификаторов доступа (public, private)
 IncludeBlocks: Merge
-AllowShortBlocksOnASingleLine: false
-AllowShortFunctionsOnASingleLine: false
-AllowShortIfStatementsOnASingleLine: false
-AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: false        # Запретить однострочные блоки
+AllowShortFunctionsOnASingleLine: None      # Запретить однострочные функции
+AllowShortIfStatementsOnASingleLine: false  # Запретить однострочные if
+AllowShortLoopsOnASingleLine: false         # Запретить однострочные циклы
 
-# Only from clang-format 14.0.0
 QualifierAlignment: Left
 SeparateDefinitionBlocks: Always
 EmptyLineAfterAccessModifier: Never
 
-# Only after clang-format 15.0.0
 InsertBraces: true
+InsertNewlineAtEOF: true                    # Добавлять пустую строку в конце файла
 
-# Перенос строк, version?:
-# Оставлять аргументы вызова функции на одной строке, если влезают:
-BinPackArguments: false
-# То же самое для параметров функций:
-BinPackParameters: false
-# Максимальная длина строки, после которой можно переносить:
-ColumnLimit: 100
-# Выравнивание аргументов при переносе:
-AlignAfterOpenBracket: Align 
+BinPackArguments: false                     # Оставлять аргументы вызова функции на одной строке, если влезают
+BinPackParameters: false                    # То же самое для параметров функций
+ColumnLimit: 100                            # Максимальная длина строки, после которой можно переносить
+AlignAfterOpenBracket: Align                # Выравнивание аргументов при переносе

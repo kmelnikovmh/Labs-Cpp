@@ -3,11 +3,10 @@
 #include <memory>
 
 namespace widgets {
-box::box(box::kind orientation)
-    : m_orientation(orientation), m_width(0), m_height(0) {
+box::box(box::kind orientation) : m_orientation(orientation), m_width(0), m_height(0) {
 }
 
-widget *box::add(std::unique_ptr<widget> ptr) {
+widget* box::add(std::unique_ptr<widget> ptr) {
     m_children.push_back(std::move(ptr));
     set_parent(m_children.back().get(), this);
     if (m_orientation == kind::VERTICAL) {
@@ -37,7 +36,7 @@ std::unique_ptr<widget> box::remove(int index) {
     return ptr;
 }
 
-widget *box::get(int index) const {
+widget* box::get(int index) const {
     return m_children[index].get();
 }
 
@@ -56,12 +55,12 @@ int box::height() const {
 void box::update_width() {
     int curr_width = 0;
     if (m_orientation == kind::HORIZONTAL) {
-        for (const auto &ptr : m_children) {
+        for (const auto& ptr : m_children) {
             // cppcheck-suppress[useStlAlgorithm]
             curr_width += (*ptr).width();
         }
     } else {
-        for (const auto &ptr : m_children) {
+        for (const auto& ptr : m_children) {
             curr_width = std::max((*ptr).width(), curr_width);
         }
     }
@@ -71,12 +70,12 @@ void box::update_width() {
 void box::update_height() {
     int curr_height = 0;
     if (m_orientation == kind::VERTICAL) {
-        for (const auto &ptr : m_children) {
+        for (const auto& ptr : m_children) {
             // cppcheck-suppress[useStlAlgorithm]
             curr_height += (*ptr).height();
         }
     } else {
-        for (const auto &ptr : m_children) {
+        for (const auto& ptr : m_children) {
             curr_height = std::max((*ptr).height(), curr_height);
         }
     }
@@ -88,9 +87,9 @@ void box::update_layout() {
     this->update_height();
 }
 
-widget *box::child_atVERT(const int &x, const int &y) {
+widget* box::child_atVERT(const int& x, const int& y) {
     int currY = 0;
-    for (const auto &ptr : m_children) {
+    for (const auto& ptr : m_children) {
         const int ptr_height = (*ptr).height();
         const int ptr_width = (*ptr).width();
         if (currY <= y && y < currY + ptr_height) {
@@ -106,9 +105,9 @@ widget *box::child_atVERT(const int &x, const int &y) {
     return nullptr;
 }
 
-widget *box::child_atHORI(const int &x, const int &y) {
+widget* box::child_atHORI(const int& x, const int& y) {
     int currX = 0;
-    for (const auto &ptr : m_children) {
+    for (const auto& ptr : m_children) {
         const int ptr_height = (*ptr).height();
         const int ptr_width = (*ptr).width();
         if (currX <= x && x < currX + ptr_width) {
@@ -124,8 +123,8 @@ widget *box::child_atHORI(const int &x, const int &y) {
     return nullptr;
 }
 
-widget *box::child_at(int x, int y) {
-    widget *curr_ptr = nullptr;
+widget* box::child_at(int x, int y) {
+    widget* curr_ptr = nullptr;
     if (this->widget::child_at(x, y) == nullptr) {
         return nullptr;
     }

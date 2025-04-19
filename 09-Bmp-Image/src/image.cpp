@@ -4,11 +4,11 @@
 
 namespace lab_bmp {
 
-unable_to_open_file_error::unable_to_open_file_error(const std::string &filename)
+unable_to_open_file_error::unable_to_open_file_error(const std::string& filename)
     : std::runtime_error("Unable to open file \"" + filename + "\"") {
 }
 
-invalid_image_error::invalid_image_error(const std::string &statement)
+invalid_image_error::invalid_image_error(const std::string& statement)
     : std::runtime_error("Invalid BMP: " + statement) {
 }
 
@@ -39,18 +39,18 @@ subimage_is_out_error::subimage_is_out_error()
 image::image() : m_file_header{}, m_info_header{} {
 }
 
-void image::load_image(const std::string &file_path) {
+void image::load_image(const std::string& file_path) {
     std::ifstream filestream(file_path, std::ios_base::binary);
 
     if (!filestream) {
         throw unable_to_open_file_error(file_path);
     }
 
-    filestream.read(reinterpret_cast<char *>(&m_file_header), HEADERS_SIZE);
+    filestream.read(reinterpret_cast<char*>(&m_file_header), HEADERS_SIZE);
     validate_headers();
 
     m_data_pixels.resize(static_cast<size_t>(m_info_header.biSizeImage));
-    filestream.read(reinterpret_cast<char *>(m_data_pixels.data()),
+    filestream.read(reinterpret_cast<char*>(m_data_pixels.data()),
                     static_cast<std::streamsize>(m_info_header.biSizeImage));
 }
 
@@ -69,9 +69,9 @@ void image::crop(int32_t ul_corner_x, int32_t ul_corner_y, int32_t width, int32_
     for (int32_t curr_row = 0; curr_row < height; ++curr_row) {
         const int32_t src_row = m_info_header.biHeight - ul_corner_y - height + curr_row;
 
-        uint8_t *src_ptr = m_data_pixels.data() + static_cast<ptrdiff_t>(src_row * row_size_old) +
+        uint8_t* src_ptr = m_data_pixels.data() + static_cast<ptrdiff_t>(src_row * row_size_old) +
                            static_cast<ptrdiff_t>(ul_corner_x * BYTES_PER_PIXEL);
-        uint8_t *dest_ptr = new_data.data() + static_cast<ptrdiff_t>(curr_row * row_size_new);
+        uint8_t* dest_ptr = new_data.data() + static_cast<ptrdiff_t>(curr_row * row_size_new);
 
         std::memcpy(dest_ptr, src_ptr, static_cast<size_t>(width) * BYTES_PER_PIXEL);
     }
@@ -99,10 +99,10 @@ void image::rotate_clockwise() {
             const int32_t dest_row = new_height - curr_col - 1;
             const int32_t dest_col = src_row;
 
-            uint8_t *src_ptr = m_data_pixels.data() +
+            uint8_t* src_ptr = m_data_pixels.data() +
                                static_cast<ptrdiff_t>(src_row * row_size_old) +
                                static_cast<ptrdiff_t>(curr_col * BYTES_PER_PIXEL);
-            uint8_t *dest_ptr = rotated_data.data() +
+            uint8_t* dest_ptr = rotated_data.data() +
                                 static_cast<ptrdiff_t>(dest_row * row_size_new) +
                                 static_cast<ptrdiff_t>(dest_col * BYTES_PER_PIXEL);
 
@@ -118,15 +118,15 @@ void image::rotate_clockwise() {
     m_file_header.bfSize = HEADERS_SIZE + m_info_header.biSizeImage;
 }
 
-void image::export_image(const std::string &file_path) {
+void image::export_image(const std::string& file_path) {
     std::ofstream filestream(file_path, std::ios_base::binary);
 
     if (!filestream) {
         throw unable_to_open_file_error(file_path);
     }
 
-    filestream.write(reinterpret_cast<char *>(&m_file_header), HEADERS_SIZE);
-    filestream.write(reinterpret_cast<char *>(m_data_pixels.data()), m_info_header.biSizeImage);
+    filestream.write(reinterpret_cast<char*>(&m_file_header), HEADERS_SIZE);
+    filestream.write(reinterpret_cast<char*>(m_data_pixels.data()), m_info_header.biSizeImage);
 }
 
 void image::validate_headers() const {

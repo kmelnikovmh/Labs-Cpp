@@ -10,7 +10,7 @@ public:
 
     [[nodiscard]] int width() const final;
     [[nodiscard]] int height() const final;
-    widget *child_at(int x, int y) final;
+    widget* child_at(int x, int y) final;
 
     [[nodiscard]] int radius() const;
     void radius(int new_radius);

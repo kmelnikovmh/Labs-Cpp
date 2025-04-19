@@ -8,11 +8,11 @@
 namespace lab_bmp {
 
 struct unable_to_open_file_error : std::runtime_error {
-    explicit unable_to_open_file_error(const std::string &filename);
+    explicit unable_to_open_file_error(const std::string& filename);
 };
 
 struct invalid_image_error : std::runtime_error {
-    explicit invalid_image_error(const std::string &statement);
+    explicit invalid_image_error(const std::string& statement);
 };
 
 struct invalid_version_error : invalid_image_error {
@@ -70,20 +70,18 @@ private:
 
 #pragma pack(pop)
 
-    BITMAPFILEHEADER
-    m_file_header;
-    BITMAPINFOHEADER_V3
-    m_info_header;
+    BITMAPFILEHEADER m_file_header;
+    BITMAPINFOHEADER_V3 m_info_header;
     std::vector<uint8_t> m_data_pixels;
 
     void validate_headers() const;
 
 public:
     image();
-    void load_image(const std::string &file_path);
+    void load_image(const std::string& file_path);
     void crop(int32_t ul_corner_x, int32_t ul_corner_y, int32_t width, int32_t height);
     void rotate_clockwise();
-    void export_image(const std::string &file_path);
+    void export_image(const std::string& file_path);
 };
 }  // namespace
    // lab_bmp

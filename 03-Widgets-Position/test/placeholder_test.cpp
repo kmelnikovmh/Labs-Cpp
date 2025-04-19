@@ -1,6 +1,5 @@
-#include "doctest.h"
-
 #include "../include/placeholder.hpp"
+#include "doctest.h"
 
 TEST_CASE("...") {
     // ...

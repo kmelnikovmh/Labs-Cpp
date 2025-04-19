@@ -1,14 +1,13 @@
+#include "../shared_ptr.hpp"
 #include <iostream>  // https://github.com/onqtam/doctest/issues/356
 #include <thread>
 #include <vector>
 #include "doctest.h"
 
-#include "../shared_ptr.hpp" 
-
 using ptrs::shared::shared_ptr;
 
 TEST_CASE("shared_ptr copy constructor") {
-    int *const raw_p = new int(10);
+    int* const raw_p = new int(10);
     const shared_ptr<int> p1(raw_p);
 
     REQUIRE(p1.get() == raw_p);
@@ -26,6 +25,7 @@ TEST_CASE("shared_ptr can be copy-constructed thread-safely") {
     struct Foo {
         std::string s = std::string(1'000'000, 'x');
     };
+
     const shared_ptr<Foo> p_orig(new Foo());
 
     constexpr int THREADS = 10;
@@ -41,7 +41,7 @@ TEST_CASE("shared_ptr can be copy-constructed thread-safely") {
             }
         });
     }
-    for (auto &t : threads) {
+    for (auto& t : threads) {
         t.join();
     }
 }

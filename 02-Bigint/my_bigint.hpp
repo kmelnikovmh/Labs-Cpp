@@ -20,7 +20,7 @@ public:
         digits.push_back(0);
     }
 
-    explicit bigint(const std::string &str) {
+    explicit bigint(const std::string& str) {
         int digit_length = static_cast<int>(log10(BASE));
         digits.reserve(str.size() / digit_length + 1);
         int i = str.size() - digit_length;
@@ -50,7 +50,7 @@ public:
         remove_lead_zeros();
     }
 
-    friend bool operator==(const bigint &lhs, const bigint &rhs) {
+    friend bool operator==(const bigint& lhs, const bigint& rhs) {
         if (lhs.digits.size() != rhs.digits.size()) {
             return false;
         }
@@ -62,11 +62,11 @@ public:
         return true;
     }
 
-    friend bool operator!=(const bigint &lhs, const bigint &rhs) {
+    friend bool operator!=(const bigint& lhs, const bigint& rhs) {
         return !(lhs == rhs);
     }
 
-    friend bool operator<(const bigint &lhs, const bigint &rhs) {
+    friend bool operator<(const bigint& lhs, const bigint& rhs) {
         int l = lhs.digits.size();
         int r = rhs.digits.size();
         if (l != r) {
@@ -81,15 +81,15 @@ public:
         return false;
     }
 
-    friend bool operator>(const bigint &lhs, const bigint &rhs) {
+    friend bool operator>(const bigint& lhs, const bigint& rhs) {
         return (!(lhs < rhs)) && lhs != rhs;
     }
 
-    friend bool operator>=(const bigint &lhs, const bigint &rhs) {
+    friend bool operator>=(const bigint& lhs, const bigint& rhs) {
         return lhs > rhs || lhs == rhs;
     }
 
-    friend bool operator<=(const bigint &lhs, const bigint &rhs) {
+    friend bool operator<=(const bigint& lhs, const bigint& rhs) {
         return lhs < rhs || lhs == rhs;
     }
 
@@ -123,7 +123,7 @@ public:
         return atoi(str.c_str());
     }
 
-    bigint &operator+=(const bigint &rhs) {
+    bigint& operator+=(const bigint& rhs) {
         int carry = 0;
         int lhsSize = digits.size(), rhsSize = rhs.digits.size();
         if (lhsSize < rhsSize) {
@@ -148,11 +148,11 @@ public:
         return *this;
     }
 
-    friend bigint operator+(bigint lhs, const bigint &rhs) {
+    friend bigint operator+(bigint lhs, const bigint& rhs) {
         return lhs += rhs;
     }
 
-    bigint &operator++() {
+    bigint& operator++() {
         (*this) += 1;
         return *this;
     }
@@ -163,7 +163,7 @@ public:
         return result;
     }
 
-    bigint &operator-=(const bigint &rhs) {
+    bigint& operator-=(const bigint& rhs) {
         int lhsSize = digits.size();
         int rhsSize = rhs.digits.size();
         int borrow = 0;
@@ -185,11 +185,11 @@ public:
         return *this;
     }
 
-    friend bigint operator-(bigint lhs, const bigint &rhs) {
+    friend bigint operator-(bigint lhs, const bigint& rhs) {
         return lhs -= rhs;
     }
 
-    bigint &operator--() {
+    bigint& operator--() {
         (*this) -= 1;
         return *this;
     }
@@ -200,11 +200,11 @@ public:
         return result;
     }
 
-    friend std::ostream &operator<<(std::ostream &ostream, const bigint &lhs) {
+    friend std::ostream& operator<<(std::ostream& ostream, const bigint& lhs) {
         return ostream << lhs.to_string();
     }
 
-    friend std::istream &operator>>(std::istream &istream, bigint &lhs) {
+    friend std::istream& operator>>(std::istream& istream, bigint& lhs) {
         std::string str;
         istream >> str;
         lhs = bigint(str);

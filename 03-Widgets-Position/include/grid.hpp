@@ -9,11 +9,11 @@ class grid final : public container {
 public:
     explicit grid(int, int);
 
-    widget *add(std::unique_ptr<widget>, int, int);
+    widget* add(std::unique_ptr<widget>, int, int);
     std::unique_ptr<widget> remove(int, int);
     [[nodiscard]] bool is_not_correct_index(int row, int column) const;
 
-    [[nodiscard]] widget *get(int, int) const;
+    [[nodiscard]] widget* get(int, int) const;
     [[nodiscard]] int rows() const;
     [[nodiscard]] int columns() const;
     [[nodiscard]] int width() const final;
@@ -23,7 +23,7 @@ public:
     void update_max_height_in_row(int);
     void update_layout() final;
 
-    widget *child_at(int, int) final;
+    widget* child_at(int, int) final;
 
 private:
     int m_rows;

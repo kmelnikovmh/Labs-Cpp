@@ -22,8 +22,7 @@ struct placeholder : widget {
     int m_height;
 };
 
-[[nodiscard]] std::unique_ptr<placeholder>
-make_placeholder(int width, int height);
+[[nodiscard]] std::unique_ptr<placeholder> make_placeholder(int width, int height);
 }  // namespace widgets
 
 #endif  // PLACEHOLDER_HPP_

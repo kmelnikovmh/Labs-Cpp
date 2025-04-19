@@ -2,33 +2,30 @@
 
 namespace matrix_interpreter {
 
-matrix_interpreter_error::matrix_interpreter_error(const std::string &comment)
-    : std::runtime_error(comment){};
+matrix_interpreter_error::matrix_interpreter_error(const std::string& comment)
+    : std::runtime_error(comment) {};
 
-unknown_command_error::unknown_command_error(std::string &command)
-    : matrix_interpreter_error("Unknown command: '" + command + "'"){};
+unknown_command_error::unknown_command_error(std::string& command)
+    : matrix_interpreter_error("Unknown command: '" + command + "'") {};
 
 invalid_command_format_error::invalid_command_format_error()
-    : matrix_interpreter_error("Invalid command format"){};
+    : matrix_interpreter_error("Invalid command format") {};
 
-is_not_register_error::is_not_register_error(std::string &token)
-    : matrix_interpreter_error("'" + token + "' is not a register"){};
+is_not_register_error::is_not_register_error(std::string& token)
+    : matrix_interpreter_error("'" + token + "' is not a register") {};
 
-unable_to_open_file_error::unable_to_open_file_error(std::string &file)
-    : matrix_interpreter_error("Unable to open file '" + file + "'"){};
+unable_to_open_file_error::unable_to_open_file_error(std::string& file)
+    : matrix_interpreter_error("Unable to open file '" + file + "'") {};
 
 invalid_file_format_error::invalid_file_format_error()
-    : matrix_interpreter_error("Invalid file format"){};
+    : matrix_interpreter_error("Invalid file format") {};
 
-invalid_command_input_function_add_or_mul::
-    invalid_command_input_function_add_or_mul()
-    : matrix_interpreter_error("Invalid commad input function add_or_mul"){};
+invalid_command_input_function_add_or_mul::invalid_command_input_function_add_or_mul()
+    : matrix_interpreter_error("Invalid commad input function add_or_mul") {};
 
 const int REGISTER_SIZE = 10;
 
-MatrixInterpreter::Commands MatrixInterpreter::get_commands(
-    const std::string &str
-) {
+MatrixInterpreter::Commands MatrixInterpreter::get_commands(const std::string& str) {
     if (str == "exit") {
         return Commands::EXIT;
     } else if (str == "load") {
@@ -45,9 +42,8 @@ MatrixInterpreter::Commands MatrixInterpreter::get_commands(
     return Commands::PASS;
 }
 
-std::vector<Matrix> &MatrixInterpreter::get_interpreter_register() {
-    static std::vector<Matrix> interpreter_register =
-        std::vector<Matrix>(REGISTER_SIZE, Matrix());
+std::vector<Matrix>& MatrixInterpreter::get_interpreter_register() {
+    static std::vector<Matrix> interpreter_register = std::vector<Matrix>(REGISTER_SIZE, Matrix());
     return interpreter_register;
 }
 
@@ -82,27 +78,23 @@ void MatrixInterpreter::start_interpreter() {
                 case (Commands::ADD):
                     register_int_one = process_register(tokens[1]);
                     register_int_two = process_register(tokens[2]);
-                    add_or_mul(
-                        Commands::ADD, register_int_one, register_int_two
-                    );
+                    add_or_mul(Commands::ADD, register_int_one, register_int_two);
                     break;
                 case (Commands::MUL):
                     register_int_one = process_register(tokens[1]);
                     register_int_two = process_register(tokens[2]);
-                    add_or_mul(
-                        Commands::MUL, register_int_one, register_int_two
-                    );
+                    add_or_mul(Commands::MUL, register_int_one, register_int_two);
                     break;
             }
-        } catch (matrix_interpreter_error &e) {
+        } catch (matrix_interpreter_error& e) {
             std::cout << e.what() << "\n";
-        } catch (matrix_error &e) {
+        } catch (matrix_error& e) {
             std::cout << e.what() << "\n";
-        } catch (std::bad_alloc &) {
+        } catch (std::bad_alloc&) {
             std::cout << "Unable to allocate memory\n";
-        } catch (std::ios_base::failure &) {
+        } catch (std::ios_base::failure&) {
             std::cout << "Invalid file format\n";
-        } catch (std::exception &e) {
+        } catch (std::exception& e) {
             std::cout << e.what() << "\n";
         }
     }
@@ -130,22 +122,26 @@ std::vector<std::string> MatrixInterpreter::read_command() {
     const Commands command = get_commands(tokens[0]);
     if (command == Commands::PASS) {
         throw unknown_command_error(tokens[0]);
-    } else if ((command == Commands::EXIT && count_tokens != 0) || (command == Commands::LOAD && count_tokens != 2) || (command == Commands::PRINT && count_tokens != 1) || (command == Commands::ELEM && count_tokens != 3) || (command == Commands::ADD && count_tokens != 2) || (command == Commands::MUL && count_tokens != 2)) {
+    } else if ((command == Commands::EXIT && count_tokens != 0) ||
+               (command == Commands::LOAD && count_tokens != 2) ||
+               (command == Commands::PRINT && count_tokens != 1) ||
+               (command == Commands::ELEM && count_tokens != 3) ||
+               (command == Commands::ADD && count_tokens != 2) ||
+               (command == Commands::MUL && count_tokens != 2)) {
         throw invalid_command_format_error();
     }
 
     return tokens;
 }
 
-int MatrixInterpreter::process_register(std::string &my_register) {
-    if (my_register.size() != 2 || my_register[0] != '$' ||
-        std::isdigit(my_register[1]) == 0) {
+int MatrixInterpreter::process_register(std::string& my_register) {
+    if (my_register.size() != 2 || my_register[0] != '$' || std::isdigit(my_register[1]) == 0) {
         throw is_not_register_error(my_register);
     }
     return static_cast<int>(my_register[1]) - 48;
 }
 
-int MatrixInterpreter::process_number_element(const std::string &my_number) {
+int MatrixInterpreter::process_number_element(const std::string& my_number) {
     int count_zero = 0;
     for (int i = 0; i < static_cast<int>(my_number.size()); ++i) {
         if (my_number[i] == '0') {
@@ -162,8 +158,8 @@ int MatrixInterpreter::process_number_element(const std::string &my_number) {
     return result;
 }
 
-void MatrixInterpreter::load(int register_int, std::string &file) {
-    Matrix &matrix = get_interpreter_register()[register_int];
+void MatrixInterpreter::load(int register_int, std::string& file) {
+    Matrix& matrix = get_interpreter_register()[register_int];
 
     const std::filesystem::path filename(file);
     std::ifstream cin_file(filename);
@@ -198,7 +194,7 @@ void MatrixInterpreter::load(int register_int, std::string &file) {
 }
 
 void MatrixInterpreter::print(int register_int) {
-    Matrix &matrix = get_interpreter_register()[register_int];
+    Matrix& matrix = get_interpreter_register()[register_int];
 
     for (int i = 0; i < matrix.get_rows(); ++i) {
         for (int j = 0; j < matrix.get_cols(); ++j) {
@@ -215,13 +211,9 @@ void MatrixInterpreter::elem(int register_int, int row, int col) {
     std::cout << get_interpreter_register()[register_int].at(row, col) << "\n";
 }
 
-void MatrixInterpreter::add_or_mul(
-    Commands operation,
-    int register_int_one,
-    int register_int_two
-) {
-    Matrix &matrix_one = get_interpreter_register()[register_int_one];
-    Matrix &matrix_two = get_interpreter_register()[register_int_two];
+void MatrixInterpreter::add_or_mul(Commands operation, int register_int_one, int register_int_two) {
+    Matrix& matrix_one = get_interpreter_register()[register_int_one];
+    Matrix& matrix_two = get_interpreter_register()[register_int_two];
     if (operation == Commands::ADD) {
         Matrix::sum(matrix_one, matrix_two);
     } else if (operation == Commands::MUL) {

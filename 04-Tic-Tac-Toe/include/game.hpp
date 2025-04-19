@@ -19,13 +19,13 @@ class Game {
     [[nodiscard]] bool maybeWins(int y, int x) const;
     [[nodiscard]] bool maybeWinsHorizVertic(int y, int x) const;
     [[nodiscard]] bool maybeWinsDiag(int y, int x) const;
-    void Counter(int &count, int i, int j) const;
+    void Counter(int& count, int i, int j) const;
 
 public:
     Game();
     [[nodiscard]] int what_in_cell(int y, int x) const;
     [[nodiscard]] char whoPlayer_to_char() const;
-    State oneCircle(const std::tuple<int, int, int> &tuple, bool existExit);
+    State oneCircle(const std::tuple<int, int, int>& tuple, bool existExit);
 };
 }  // namespace tictactoe
 #endif

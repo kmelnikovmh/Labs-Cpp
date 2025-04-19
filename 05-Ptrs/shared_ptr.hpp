@@ -12,15 +12,15 @@ class shared_ptr {
 private:
     struct wrapper {
         // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes,-warnings-as-errors)
-        T *m_ptr = nullptr;
+        T* m_ptr = nullptr;
         // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes,-warnings-as-errors)
         std::atomic<size_t> m_count = 0;
 
-        explicit wrapper(T *ptr, size_t count) : m_ptr(ptr), m_count(count) {
+        explicit wrapper(T* ptr, size_t count) : m_ptr(ptr), m_count(count) {
         }
     };
 
-    wrapper *m_wrapper_ptr = nullptr;
+    wrapper* m_wrapper_ptr = nullptr;
 
     void default_delete() {
         if (m_wrapper_ptr != nullptr && --(m_wrapper_ptr->m_count) == 0) {
@@ -36,7 +36,7 @@ public:
     shared_ptr(std::nullptr_t) noexcept : m_wrapper_ptr(nullptr) {
     }
 
-    explicit shared_ptr(T *ptr) noexcept
+    explicit shared_ptr(T* ptr) noexcept
         : m_wrapper_ptr(ptr == nullptr ? nullptr : new wrapper(ptr, 1)) {
     }
 
@@ -45,14 +45,13 @@ public:
     }
 
     // copy
-    shared_ptr(const shared_ptr &other) noexcept
-        : m_wrapper_ptr(other.m_wrapper_ptr) {
+    shared_ptr(const shared_ptr& other) noexcept : m_wrapper_ptr(other.m_wrapper_ptr) {
         if (m_wrapper_ptr != nullptr) {
             ++(m_wrapper_ptr->m_count);
         }
     }
 
-    shared_ptr &operator=(const shared_ptr &other) noexcept {
+    shared_ptr& operator=(const shared_ptr& other) noexcept {
         if (this == &other || m_wrapper_ptr == other.m_wrapper_ptr) {
             return *this;
         }
@@ -66,11 +65,11 @@ public:
     }
 
     // move
-    shared_ptr(shared_ptr &&other) noexcept
+    shared_ptr(shared_ptr&& other) noexcept
         : m_wrapper_ptr(std::exchange(other.m_wrapper_ptr, nullptr)) {
     }
 
-    shared_ptr &operator=(shared_ptr &&other) {
+    shared_ptr& operator=(shared_ptr&& other) {
         if (this == &other || m_wrapper_ptr == other.m_wrapper_ptr) {
             return *this;
         }
@@ -81,14 +80,14 @@ public:
     }
 
     // methods
-    [[nodiscard]] T *get() const noexcept {
+    [[nodiscard]] T* get() const noexcept {
         if (m_wrapper_ptr == nullptr) {
             return nullptr;
         }
         return m_wrapper_ptr->m_ptr;
     }
 
-    void reset(T *new_ptr = nullptr) {
+    void reset(T* new_ptr = nullptr) {
         default_delete();
         if (new_ptr == nullptr) {
             m_wrapper_ptr = nullptr;
@@ -102,23 +101,23 @@ public:
         return get() != nullptr;
     }
 
-    T &operator*() const {
+    T& operator*() const {
         return *get();
     }
 
-    T *operator->() const {
+    T* operator->() const {
         return get();
     }
 
-    bool operator==(const shared_ptr<T> &other) const noexcept {
+    bool operator==(const shared_ptr<T>& other) const noexcept {
         return m_wrapper_ptr == other.m_wrapper_ptr;
     }
 
-    bool operator!=(const shared_ptr<T> &other) const noexcept {
+    bool operator!=(const shared_ptr<T>& other) const noexcept {
         return m_wrapper_ptr != other.m_wrapper_ptr;
     }
 
-    friend void swap(shared_ptr &lhs, shared_ptr &rhs) {
+    friend void swap(shared_ptr& lhs, shared_ptr& rhs) {
         std::swap(lhs.m_wrapper_ptr, rhs.m_wrapper_ptr);
     }
 };

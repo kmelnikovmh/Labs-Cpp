@@ -11,7 +11,7 @@ struct missing_arguments_error : std::runtime_error {
 };
 }  // namespace lab_bmp
 
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
     assert(std::is_copy_constructible_v<lab_bmp::image>);
     assert(std::is_move_constructible_v<lab_bmp::image>);
     assert(std::is_copy_assignable_v<lab_bmp::image>);
@@ -36,10 +36,10 @@ int main(int argc, const char *argv[]) {
         main_image.rotate_clockwise();
 
         main_image.export_image(out_file);
-    } catch (const std::bad_alloc &) {
+    } catch (const std::bad_alloc&) {
         std::cerr << "Insufficient memory\n";
         return 1;
-    } catch (const std::exception &e) {
+    } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
         return 1;
     }

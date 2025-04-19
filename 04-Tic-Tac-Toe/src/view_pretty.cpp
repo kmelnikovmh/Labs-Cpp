@@ -3,7 +3,7 @@
 namespace tictactoe {
 
 class view_pretty : View {
-    std::pair<char, int> static processingString(std::string &str) {
+    std::pair<char, int> static processingString(std::string& str) {
         if (str.empty() || (str[1] != '-' && isdigit(str[1]) == 0)) {
             return {'-', -2};
         }
@@ -24,13 +24,7 @@ class view_pretty : View {
         }
     }
 
-    void static printCell(
-        const Game &currGame,
-        int i,
-        int j,
-        int row,
-        int column
-    ) {
+    void static printCell(const Game& currGame, int i, int j, int row, int column) {
         if (i == 0) {
             if (j == 4) {
                 std::cout << "+";
@@ -39,8 +33,7 @@ class view_pretty : View {
             }
             return;
         }
-        const char filler =
-            what_in_cell_PrettyVersion(currGame.what_in_cell(row, column));
+        const char filler = what_in_cell_PrettyVersion(currGame.what_in_cell(row, column));
         if (j == 0 || j == 3) {
             std::cout << " ";
         } else if ((filler == ' ' || filler == '@') && j < 4) {
@@ -62,7 +55,7 @@ class view_pretty : View {
         }
     }
 
-    void static printRow(const Game &currGame, int i, int row) {
+    void static printRow(const Game& currGame, int i, int row) {
         if (i == 1) {
             std::cout << 9 - row;
         } else {
@@ -84,7 +77,7 @@ class view_pretty : View {
     }
 
 public:
-    std::tuple<int, int, int> readCoord(std::string &str) const final {
+    std::tuple<int, int, int> readCoord(std::string& str) const final {
         std::stringstream sstream(str);
         std::string first;
         std::string second;
@@ -98,7 +91,7 @@ public:
         return {y, x, static_cast<int>(second.size())};
     }
 
-    void printField(Game &currGame, State &maybeWins, bool swift) const final {
+    void printField(Game& currGame, State& maybeWins, bool swift) const final {
         if (!swift) {
             std::cout << "\n";
         }

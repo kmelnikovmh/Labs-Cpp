@@ -2,7 +2,7 @@
 
 namespace tictactoe {
 class view_compact final : View {
-    int static processingString(const std::string &str) {
+    int static processingString(const std::string& str) {
         if (str.empty()) {
             return -2;
         }
@@ -19,7 +19,7 @@ class view_compact final : View {
     }
 
 public:
-    std::tuple<int, int, int> readCoord(std::string &str) const final {
+    std::tuple<int, int, int> readCoord(std::string& str) const final {
         std::stringstream sstream(str);
         std::string first;
         std::string second;
@@ -30,7 +30,7 @@ public:
         return {y, x, static_cast<int>(third.size())};
     }
 
-    void printField(Game &currGame, State &maybeWins, bool swift) const final {
+    void printField(Game& currGame, State& maybeWins, bool swift) const final {
         if (!swift) {
             std::cout << "\n";
         }

@@ -7,7 +7,7 @@
 
 namespace matrix_interpreter {
 struct matrix_error : std::runtime_error {
-    explicit matrix_error(const std::string &comment);
+    explicit matrix_error(const std::string& comment);
 };
 
 struct out_of_bounds_error : matrix_error {
@@ -27,12 +27,12 @@ public:
     Matrix();
     Matrix(int rows, int cols);
 
-    int &get_rows();
-    int &get_cols();
+    int& get_rows();
+    int& get_cols();
 
-    int &at(int row, int col);
-    static void sum(Matrix &lhs, Matrix &rhs);
-    static void multiplication(Matrix &lhs, Matrix &rhs);
+    int& at(int row, int col);
+    static void sum(Matrix& lhs, Matrix& rhs);
+    static void multiplication(Matrix& lhs, Matrix& rhs);
 };
 }  // namespace matrix_interpreter
 #endif

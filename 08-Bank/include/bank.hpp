@@ -33,20 +33,16 @@ class user_transactions_iterator;
 struct transaction {
     // NOLINTBEGIN(misc-non-private-member-variables-in-classes,
     // -warnings-as-errors)
-    const user *const counterparty;
+    const user* const counterparty;
     const int balance_delta_xts;
     const std::string comment;
     // NOLINTEND(misc-non-private-member-variables-in-classes,
     // -warnings-as-errors)
 
-    transaction(
-        const user *counterparty,
-        int balance_delta_xts,
-        std::string comment
-    ) noexcept;
+    transaction(const user* counterparty, int balance_delta_xts, std::string comment) noexcept;
 
-    friend bool operator==(const bank::transaction &a, const bank::transaction &b);
-    friend bool operator!=(const bank::transaction &a, const bank::transaction &b);
+    friend bool operator==(const bank::transaction& a, const bank::transaction& b);
+    friend bool operator!=(const bank::transaction& a, const bank::transaction& b);
 };
 
 class ledger {
@@ -56,7 +52,7 @@ private:
 
 public:
     ledger() = default;
-    user &get_or_create_user(const std::string &name);
+    user& get_or_create_user(const std::string& name);
 };
 
 class user {
@@ -74,31 +70,28 @@ private:
 public:
     explicit user(std::string name) noexcept;
 
-    const std::string &name() const noexcept;
+    const std::string& name() const noexcept;
     int balance_xts() const;
-    void
-    transfer(user &counterparty, int amount_xts, const std::string &comment);
+    void transfer(user& counterparty, int amount_xts, const std::string& comment);
 
     template <typename function>
-    user_transactions_iterator snapshot_transactions(const function &func
-    ) const;
+    user_transactions_iterator snapshot_transactions(const function& func) const;
     [[nodiscard]] user_transactions_iterator monitor() const;
 };
 
 class user_transactions_iterator {
 private:
-    const user *m_user;  // второй const запретит копирование
+    const user* m_user;  // второй const запретит копирование
     std::size_t m_last_transaction_index;
     friend class user;
 
 public:
-    explicit user_transactions_iterator(const user *user) noexcept;
+    explicit user_transactions_iterator(const user* user) noexcept;
     transaction wait_next_transaction();
 };
 
 template <typename function>
-user_transactions_iterator user::snapshot_transactions(const function &func
-) const {
+user_transactions_iterator user::snapshot_transactions(const function& func) const {
     const std::unique_lock l(m_user_mtx);
     func(m_transactions, m_balance);
     return user_transactions_iterator(this);

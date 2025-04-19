@@ -12,7 +12,7 @@ struct button final : widget {
 
     explicit button(std::string label);
 
-    [[nodiscard]] const std::string &label() const {
+    [[nodiscard]] const std::string& label() const {
         return m_label;
     }
 

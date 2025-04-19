@@ -11,4 +11,4 @@ TEST_CASE("Test2.cpp test case 2. With multiple failures and messages") {
     CHECK(true), CHECK(2 * 2 == 4);
     CHECK(2 * 2 == 5), CHECK(true);
 }
-}
+}  // namespace Test2

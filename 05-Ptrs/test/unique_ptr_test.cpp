@@ -1,14 +1,13 @@
+#include "../unique_ptr.hpp"
 #include <iostream>  // https://github.com/onqtam/doctest/issues/356
 #include "doctest.h"
-
-#include "../unique_ptr.hpp"
 
 using ptrs::unique::unique_ptr;
 
 TEST_CASE("unique_ptr incomplete type operations") {
     [[maybe_unused]] auto not_invoked = []() {
         struct IncompleteType;
-        unique_ptr<IncompleteType> &p1 = *new unique_ptr<IncompleteType>();
+        unique_ptr<IncompleteType>& p1 = *new unique_ptr<IncompleteType>();
 
         static_cast<void>(p1.get());
     };
@@ -18,8 +17,9 @@ TEST_CASE("unique_ptr incomplete type operations") {
 
 TEST_CASE("unique_ptr custom copyable deleter") {
     struct Deleter {
-        int *counter;
-        void operator()(int *) {
+        int* counter;
+
+        void operator()(int*) {
             ++*counter;
         }
     };

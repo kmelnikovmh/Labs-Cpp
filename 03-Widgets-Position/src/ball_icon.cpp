@@ -18,7 +18,7 @@ int ball_icon::height() const {
     return 2 * m_radius + 1;
 }
 
-widget *ball_icon::child_at(int x, int y) {
+widget* ball_icon::child_at(int x, int y) {
     const int ox = x - m_radius;
     const int oy = y - m_radius;
     if (ox * ox + oy * oy <= m_radius * m_radius) {

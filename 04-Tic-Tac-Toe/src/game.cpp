@@ -79,7 +79,7 @@ bool Game::maybeWinsHorizVertic(int y, int x) const {
     return false;
 }
 
-void Game::Counter(int &count, int i, int j) const {
+void Game::Counter(int& count, int i, int j) const {
     if ((currentPlayer == OptionalPlayer::O && field[i][j] == 0) ||
         (currentPlayer == OptionalPlayer::X && field[i][j] == 1)) {
         ++count;
@@ -124,13 +124,12 @@ bool Game::maybeWinsDiag(int y, int x) const {
     return false;
 }
 
-State Game::oneCircle(const std::tuple<int, int, int> &tuple, bool existExit) {
+State Game::oneCircle(const std::tuple<int, int, int>& tuple, bool existExit) {
     auto [y, x, remainStr] = tuple;
     if (existExit && x == -1 && y == -1) {
         return State::exit;
     }
-    if (remainStr != 0 || x < 0 || x > 9 || y < 0 || y > 9 ||
-        (rightMove(y, x)) == 0) {
+    if (remainStr != 0 || x < 0 || x > 9 || y < 0 || y > 9 || (rightMove(y, x)) == 0) {
         std::cout << "Bad move!\n" << whoPlayer_to_char() << " move: ";
         return State::bad;
     }
