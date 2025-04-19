@@ -37,6 +37,7 @@ cmake_install.cmake
 # Executables
 *.exe
 *.out
+*.out.bmp
 *.app
 
 # Visual C++ intermediate and debug files
@@ -49,3 +50,12 @@ cmake_install.cmake
 # IDE-files ignore
 **/.idea/
 **/.vscode/
+
+# Tex
+**.aux
+**.fdb_latexmk
+**.fls
+**.log
+**.out
+**.gz
+**.tex

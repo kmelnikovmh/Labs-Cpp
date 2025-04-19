@@ -1,0 +1,27 @@
+BasedOnStyle: Chromium
+IndentWidth: 4
+AccessModifierOffset: -4
+PointerAlignment: Right
+IncludeBlocks: Merge
+AllowShortBlocksOnASingleLine: false
+AllowShortFunctionsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+
+# Only from clang-format 14.0.0
+QualifierAlignment: Left
+SeparateDefinitionBlocks: Always
+EmptyLineAfterAccessModifier: Never
+
+# Only after clang-format 15.0.0
+InsertBraces: true
+
+# Перенос строк, version?:
+# Оставлять аргументы вызова функции на одной строке, если влезают:
+BinPackArguments: false
+# То же самое для параметров функций:
+BinPackParameters: false
+# Максимальная длина строки, после которой можно переносить:
+ColumnLimit: 100
+# Выравнивание аргументов при переносе:
+AlignAfterOpenBracket: Align 

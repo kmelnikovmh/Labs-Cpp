@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-COMMAND=("./interpreter")
+COMMAND=("./bmp-image")
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -11,18 +11,20 @@ FAIL=0
 function test_ok {
     rm -f "$SCRIPT_DIR/data-test/$1.out"
 
-    timeout -k 0.1s "$TIMEOUT" "${COMMAND[@]}" <"$SCRIPT_DIR/data-test/$1.in" | head -c 1000000 >"$SCRIPT_DIR/data-test/$1.out"
+    ARGS=$(<"$SCRIPT_DIR/data-test/$1.in")
+    echo $ARGS
+
+    timeout -k 0.1s "$TIMEOUT" "${COMMAND[@]}" $ARGS
 
     EXITCODE=${PIPESTATUS[0]}
     case "$EXITCODE" in
     0)
-        CUR_OK=0
-        diff "$SCRIPT_DIR/data-test/$1.sol" "$SCRIPT_DIR/data-test/$1.out" && CUR_OK=1
-        if [[ $CUR_OK == 1 ]]; then
-          echo PASS
+        if cmp -n 1000000 -s "$SCRIPT_DIR/data-test/$1.sol.bmp" "$SCRIPT_DIR/data-test/$1.out.bmp"; then
+            echo PASS
         else
-          echo -e "\033[31;1mWA\033[0m"
-          FAIL=1
+            echo -e "\033[31;1mWA\033[0m"
+            cmp -n 1000000 "$SCRIPT_DIR/data-test/$1.sol.bmp" "$SCRIPT_DIR/data-test/$1.out.bmp" | head -n 10
+            FAIL=1
         fi
         ;;
     *)

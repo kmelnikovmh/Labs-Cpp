@@ -1,0 +1,1 @@
+crop-rotate ../test/data-test/t1-lena.bmp ../test/data-test/t1-lena.out.bmp 300 240 80 60
