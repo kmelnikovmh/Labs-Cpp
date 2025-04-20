@@ -9,13 +9,13 @@ TIMEOUT=15s
 FAIL=0
 
 function test_ok {
-    rm -f "$SCRIPT_DIR/$1/stderr.out"
+    rm -f "$SCRIPT_DIR/data-test/$1/stderr.out"
 
-    clang++ -std=c++20 -o test_main test_main.cpp $1/*.cpp
+    clang++ -std=c++20 -o test_main test_main.cpp data-test/$1/*.cpp
 
-    timeout -k 0.1s "$TIMEOUT" "${COMMAND[@]}" &>"$SCRIPT_DIR/$1/stderr.out"
+    timeout -k 0.1s "$TIMEOUT" "${COMMAND[@]}" &>"$SCRIPT_DIR/data-test/$1/stderr.out"
 
-    if diff -q "$SCRIPT_DIR/$1/stderr.sol" "$SCRIPT_DIR/$1/stderr.out"; then
+    if diff -q "$SCRIPT_DIR/data-test/$1/stderr.sol" "$SCRIPT_DIR/data-test/$1/stderr.out"; then
         CUR_OK=1
     else
         CUR_OK=0
@@ -44,7 +44,7 @@ function test_ok {
     return 0
 }
 
-for test_folder in "$SCRIPT_DIR"/*; do
+for test_folder in "$SCRIPT_DIR"/data-test/*; do
     if [[ -d "$test_folder" ]]; then # Check if it's a directory
         test_folder=$(basename "$test_folder")
         echo ===== "$test_folder" =====

@@ -1,5 +1,5 @@
-load $0 ../test/data_test/matrix-2x3.txt
-load $1 ../test/data_test/matrix-3x4.txt
+load $0 ../test/data-test/matrix-2x3.txt
+load $1 ../test/data-test/matrix-3x4.txt
 elem $0 1 1
 elem $1 2 3
 elem $1 3 4

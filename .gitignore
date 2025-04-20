@@ -58,4 +58,3 @@ cmake_install.cmake
 **.log
 **.out
 **.gz
-**.tex

@@ -1,4 +1,4 @@
-#include "../../mytest.hpp"
+#include "../../../mytest.hpp"
 
 TEST_CASE("Test2.cpp test case 1") {
     CHECK(true), CHECK(2 * 2 == 5);
