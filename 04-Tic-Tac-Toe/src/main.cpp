@@ -5,6 +5,7 @@
 #include <boost/version.hpp>
 #include <game.hpp>
 #include <iostream>
+#include <memory>
 #include <string>
 #include <view.hpp>
 
@@ -38,12 +39,10 @@ int main(int argc, char* argv[]) {
 #define VIEW_COMPACT_USE_ZERO
         }
     }
-    boost::shared_ptr<tictactoe::View> currentView;
+    std::shared_ptr<tictactoe::View> currentView;
     currentView = boost_dll_import_symbol<tictactoe::View>(
         // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic,-warnings-as-errors)
-        argv[1],
-        "Views",
-        boost::dll::load_mode::append_decorations);
+        argv[1], "Views", boost::dll::load_mode::append_decorations);
 
     tictactoe::Game currGame = tictactoe::Game();
     std::string str;
