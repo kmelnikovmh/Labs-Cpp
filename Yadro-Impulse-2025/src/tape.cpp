@@ -1,6 +1,7 @@
-#include "../include/tape.hpp"
 #include <chrono>
 #include <thread>
+
+#include <tape.hpp>
 
 namespace tape_sort {
 

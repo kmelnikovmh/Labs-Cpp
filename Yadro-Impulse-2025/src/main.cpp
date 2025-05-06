@@ -1,10 +1,11 @@
 #include <exception>
 #include <fstream>
 #include <iostream>
-#include <sort.hpp>
 #include <sstream>
 #include <string>
+
 #include <tape.hpp>
+#include <sort.hpp>
 
 namespace tape_sort {
 
@@ -96,10 +97,12 @@ int main(int argc, char* argv[]) {
         try {
             std::vector<std::string> cmd_tokens = tape_sort::read_command();
             switch (tape_sort::get_cmd(cmd_tokens[0])) {
-                case tape_sort::COMMANDS::SORT:
-                    tape_sort::external_sort(
+                case tape_sort::COMMANDS::SORT: {
+                    tape_sort::SortTape m_sort_tape(
                         cmd_tokens[1], cmd_tokens[2], config_path, tmp_path, max_files, max_ram);
+                    m_sort_tape.external_sort();
                     break;
+                }
                 case tape_sort::COMMANDS::MAX_FILES:
                     max_files = std::stoi(cmd_tokens[1]);
                     break;
