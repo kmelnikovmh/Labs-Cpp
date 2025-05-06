@@ -90,7 +90,7 @@ int main(int argc, char* argv[]) {
     std::string config_path = argv[1];
     std::string tmp_path = "../tmp/";
     int max_files = 4;
-    int max_ram = 16;  // Our M
+    int max_ram = 32;  // Our M
 
     while (std::cin) {
         try {
