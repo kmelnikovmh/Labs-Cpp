@@ -2,7 +2,6 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
-#include <queue>
 #include <vector>
 
 #include <sort.hpp>
@@ -32,10 +31,6 @@ std::string SortTape::split_and_sort_one_backet(Tape& input_tape, int& counter) 
         input_tape.next_pos();
     }
     std::sort(buffer.begin(), buffer.end());
-
-    for (int i = 0; i < buffer.size(); ++i) {
-        std::cout << buffer[i] << " ";
-    }
 
     std::string file_path = m_tmp_path + "/tape_" + std::to_string(counter++) + ".temp";
     create_file_tape(file_path, buffer.size());
@@ -148,8 +143,6 @@ void SortTape::external_sort() {
         }
     }
 
-    std::cout << std::endl << tape_pool.size() << std::endl;
-
     if (tape_pool.size() != 0) {
         for (int i = 1; i < tape_pool.size(); ++i) {
             int lhs_size = std::filesystem::file_size(tape_pool[0]) / sizeof(int);
@@ -173,5 +166,4 @@ void SortTape::external_sort() {
 
     std::cout << "Stop\n\n";
 }
-
 }  // namespace tape_sort

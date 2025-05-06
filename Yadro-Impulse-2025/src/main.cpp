@@ -7,7 +7,7 @@
 #include <tape.hpp>
 #include <sort.hpp>
 
-namespace tape_sort {
+namespace {
 
 struct interpreter_error : std::runtime_error {
     explicit interpreter_error(const std::string& comment) : std::runtime_error(comment) {};
@@ -79,12 +79,11 @@ std::vector<std::string> read_command() {
 
     return tokens;
 }
-
-}  // namespace tape_sort
-
+}
+ 
 int main(int argc, char* argv[]) {
     if (argc != 2) {
-        std::cout << "\n";
+        std::cout << "Incorrect arguments - wait <config_path>\n";
         return 1;
     }
 
@@ -95,27 +94,27 @@ int main(int argc, char* argv[]) {
 
     while (std::cin) {
         try {
-            std::vector<std::string> cmd_tokens = tape_sort::read_command();
-            switch (tape_sort::get_cmd(cmd_tokens[0])) {
-                case tape_sort::COMMANDS::SORT: {
+            std::vector<std::string> cmd_tokens = read_command();
+            switch (get_cmd(cmd_tokens[0])) {
+                case COMMANDS::SORT: {
                     tape_sort::SortTape m_sort_tape(
                         cmd_tokens[1], cmd_tokens[2], config_path, tmp_path, max_files, max_ram);
                     m_sort_tape.external_sort();
                     break;
                 }
-                case tape_sort::COMMANDS::MAX_FILES:
+                case COMMANDS::MAX_FILES:
                     max_files = std::stoi(cmd_tokens[1]);
                     break;
-                case tape_sort::COMMANDS::MAX_RAM:
+                case COMMANDS::MAX_RAM:
                     max_ram = std::stoi(cmd_tokens[1]);
                     break;
-                case tape_sort::COMMANDS::EXIT:
+                case COMMANDS::EXIT:
                     return 0;
                     break;
-                case tape_sort::COMMANDS::UNKNOWN:
+                case COMMANDS::UNKNOWN:
                     break;
             }
-        } catch (tape_sort::interpreter_error& e) {
+        } catch (interpreter_error& e) {
             std::cout << e.what() << "\n";
         } catch (tape_sort::tape_error& e) {
             std::cout << e.what() << "\n";

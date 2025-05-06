@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <string>
+#include <exception>
 
 namespace tape_sort {
 

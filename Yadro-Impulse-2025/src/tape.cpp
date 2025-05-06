@@ -26,7 +26,7 @@ void create_file_tape(const std::string& file_path, int size_tape) {
 
 // TAPE
 Tape::Tape(const std::string& file_path, int lenght, const std::string& config_path)
-    : m_file_path(file_path), m_lenght_elem(lenght), m_pos(0) {
+    : m_file_path(file_path), m_lenght_elem(lenght), m_pos(0), m_is_all_read(false) {
     const std::filesystem::path file_name(file_path);
     m_tape_file.open(file_name, std::ios::out | std::ios::in | std::ios::binary);
     if (!m_tape_file) {
@@ -102,5 +102,6 @@ void Tape::rewind() {
     m_tape_file.clear();
 
     m_pos = 0;
+    m_is_all_read = false;
 }
 }  // namespace tape_sort
